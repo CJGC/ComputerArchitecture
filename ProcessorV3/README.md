@@ -1,1 +1,1 @@
-Modules belonging to the sparc v8 processor v3
+Modules to the sparc v8 processor v3
