@@ -6,9 +6,9 @@ use std.textio.all;
 entity registerFile is
     Port (
 			  reset : in  STD_LOGIC;
-           registerSource1 : in  STD_LOGIC_VECTOR (4 downto 0);
-           registerSource2 : in  STD_LOGIC_VECTOR (4 downto 0);
-           registerDestination : in  STD_LOGIC_VECTOR (4 downto 0);
+           registerSource1 : in  STD_LOGIC_VECTOR (5 downto 0);
+           registerSource2 : in  STD_LOGIC_VECTOR (5 downto 0);
+           registerDestination : in  STD_LOGIC_VECTOR (5 downto 0);
 			  dataToWrite : in STD_LOGIC_VECTOR (31 downto 0);
            contentRegisterSource1 : out  STD_LOGIC_VECTOR (31 downto 0);
            contentRegisterSource2 : out  STD_LOGIC_VECTOR (31 downto 0));
