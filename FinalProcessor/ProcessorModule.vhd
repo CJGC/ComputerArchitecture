@@ -46,9 +46,9 @@ architecture Behavioral of ProcessorModule is
 		COMPONENT registerFile
 	PORT(
 		reset : IN std_logic;
-		registerSource1 : IN std_logic_vector(4 downto 0);
-		registerSource2 : IN std_logic_vector(4 downto 0);
-		registerDestination : IN std_logic_vector(4 downto 0);
+		registerSource1 : IN std_logic_vector(5 downto 0);
+		registerSource2 : IN std_logic_vector(5 downto 0);
+		registerDestination : IN std_logic_vector(5 downto 0);
 		dataToWrite : IN std_logic_vector(31 downto 0);          
 		contentRegisterSource1 : OUT std_logic_vector(31 downto 0);
 		contentRegisterSource2 : OUT std_logic_vector(31 downto 0)
@@ -103,17 +103,34 @@ architecture Behavioral of ProcessorModule is
 	PORT(
 		CLK : IN std_logic;
 		Reset : IN std_logic;
+		nCWP : IN std_logic;
 		Operand2 : IN std_logic_vector(31 downto 0);
 		NZVC : IN std_logic_vector(3 downto 0);          
-		Carry : OUT std_logic
+		Carry : OUT std_logic;
+		CWP : OUT std_logic
+		);
+	END COMPONENT;
+
+	COMPONENT WindowsManager
+	PORT(
+		OP : IN std_logic_vector(1 downto 0);
+		OP3 : IN std_logic_vector(5 downto 0);
+		RS1 : IN std_logic_vector(4 downto 0);
+		RS2 : IN std_logic_vector(4 downto 0);
+		RD : IN std_logic_vector(4 downto 0);
+		CWP : IN std_logic;          
+		nRS1 : OUT std_logic_vector(5 downto 0);
+		nRS2 : OUT std_logic_vector(5 downto 0);
+		nRD : OUT std_logic_vector(5 downto 0);
+		nCWP : OUT std_logic
 		);
 	END COMPONENT;
 
 	signal instructionMemoryOut, crs1, crs2, aluResults, IMM13Extended, Operand2 : STD_LOGIC_VECTOR (31 downto 0) :=(others=>'0');
 	signal aluOP : STD_LOGIC_VECTOR(5 downto 0) :=(others=>'0');
-	signal nPCout_PCin, adderOut, address : STD_LOGIC_VECTOR(5 downto 0) :=(others => '0');
+	signal nPCout_PCin, adderOut, address, nrs1, nrs2, nrd : STD_LOGIC_VECTOR(5 downto 0) :=(others => '0');
 	signal nzvc : STD_LOGIC_VECTOR(3 downto 0) :=(others=>'0');
-	signal carry : STD_LOGIC := '0';
+	signal carry,cwp,ncwp : STD_LOGIC := '0';
 	
 begin
 	Inst_nPC: nPC PORT MAP( -- nPC
@@ -142,6 +159,19 @@ begin
 		outInstruction => instructionMemoryOut
 	);
 	
+	Inst_WindowsManager: WindowsManager PORT MAP( -- Windows manager
+		OP => instructionMemoryOut(31 downto 30),
+		OP3 => instructionMemoryOut(24 downto 19),
+		RS1 => instructionMemoryOut(18 downto 14),
+		RS2 => instructionMemoryOut(4 downto 0),
+		RD => instructionMemoryOut(29 downto 25),
+		CWP => cwp,
+		nRS1 => nrs1,
+		nRS2 => nrs2,
+		nRD => nrd,
+		nCWP => ncwp
+	);	
+	
 	Inst_SignExtensionUnit: SignExtensionUnit PORT MAP( -- Sign extension unit
 		IMM13 => instructionMemoryOut(12 downto 0),
 		IMM13Extended => IMM13Extended
@@ -149,13 +179,13 @@ begin
 	
 	Inst_registerFile: registerFile PORT MAP( -- Register file
 		reset => rst,
-		registerSource1 => instructionMemoryOut(18 downto 14),
-		registerSource2 => instructionMemoryOut(4 downto 0),
-		registerDestination => instructionMemoryOut(29 downto 25),
+		registerSource1 => nrs1,
+		registerSource2 => nrs2,
+		registerDestination => nrd,
 		dataToWrite => aluResults,
 		contentRegisterSource1 => crs1,
 		contentRegisterSource2 => crs2
-	);	
+	);
 
 	Inst_Mux: Mux PORT MAP( -- Multiplixer
 		CRs2 => crs2,
@@ -189,9 +219,11 @@ begin
 	Inst_PSR: PSR PORT MAP( -- PSR
 		CLK => CLK,
 		Reset => rst,
+		nCWP => ncwp,
 		Operand2 => Operand2,
 		NZVC => nzvc,
-		Carry => carry
+		Carry => carry,
+		CWP => cwp
 	);
 
 	aluResult <= aluResults;
