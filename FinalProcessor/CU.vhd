@@ -35,6 +35,8 @@ begin
 				when "010100" => ALUOP <= OP3; -- Subcc
 				when "001100" => ALUOP <= OP3; -- Subx
 				when "011100" => ALUOP <= OP3; -- subxcc
+				when "111100" => ALUOP <= OP3; -- SAVE
+				when "111101" => ALUOP <= OP3; -- RESTORE
 				when others => ALUOP <= "111111"; -- ERROR CASE
 			end case;
 --		else
