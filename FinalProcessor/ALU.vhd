@@ -22,21 +22,23 @@ begin
 			when "000001" => ALUResult <= CRs1 and Operand2; -- AND
 			when "000010" => ALUResult <= CRs1 or Operand2; -- OR
 			when "000011" => ALUResult <= CRs1 xor Operand2; -- XOR
-			when "000101" => ALUResult <= CRs1 nand Operand2; -- ANDN
-			when "000110" => ALUResult <= CRs1 nor Operand2; -- ORN
-			when "000111" => ALUResult <= CRs1 xnor Operand2; -- XNOR
+			when "000101" => ALUResult <= CRs1 and not(Operand2); -- ANDN
+			when "000110" => ALUResult <= CRs1 or not(Operand2); -- ORN
+			when "000111" => ALUResult <= CRs1 xor not(Operand2); -- XNOR
 			when "010001" => ALUResult <= CRs1 and Operand2; -- Andcc
-			--when "010101" => ALUResult <= CRs1 nand Operand2; -- andncc
+			when "010101" => ALUResult <= CRs1 and not(Operand2); -- andncc
 			when "010010" => ALUResult <= CRs1 or Operand2; -- Orcc
-			when "010110" => ALUResult <= CRs1 nor Operand2; -- Norcc
+			when "010110" => ALUResult <= CRs1 or not(Operand2); -- orncc
 			when "010011" => ALUResult <= CRs1 xor Operand2; -- Xorcc
-			--when "010111" => ALUResult <= CRs1 xnor Operand2; -- Xnorcc
+			when "010111" => ALUResult <= CRs1 xor not(Operand2); -- Xnorcc
 			when "010000" => ALUResult <= CRs1 + Operand2; -- Addcc
 			when "001000" => ALUResult <= CRs1 + Operand2 + Carry; -- Addx
 			when "011000" => ALUResult <= CRs1 + Operand2 + Carry; -- Addxcc
 			when "010100" => ALUResult <= CRs1 - Operand2; -- Subcc
 			when "001100" => ALUResult <= CRs1 - Operand2 - Carry; -- Subx
 			when "011100" => ALUResult <= CRs1 - Operand2 - Carry; -- subxcc
+			when "111100" => ALUResult <= CRs1 + Operand2; -- SAVE
+			when "111101" => ALUResult <= CRs1 + Operand2; -- RESTORE
 			when others => ALUResult <= (others => '1'); -- ERROR CASE
 		end case;
 	end process;
