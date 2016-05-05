@@ -1,11 +1,12 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
-
+ 
 ENTITY WindowsManager_tb IS
 END WindowsManager_tb;
  
-ARCHITECTURE behavior OF WindowsManager_tb IS  
+ARCHITECTURE behavior OF WindowsManager_tb IS 
     -- Component Declaration for the Unit Under Test (UUT)
+ 
     COMPONENT WindowsManager
     PORT(
          OP : IN  std_logic_vector(1 downto 0);
@@ -17,25 +18,29 @@ ARCHITECTURE behavior OF WindowsManager_tb IS
          nRS1 : OUT  std_logic_vector(5 downto 0);
          nRS2 : OUT  std_logic_vector(5 downto 0);
          nRD : OUT  std_logic_vector(5 downto 0);
-         nCWP : OUT  std_logic
+         nCWP : OUT  std_logic;
+         Register07 : OUT  std_logic_vector(5 downto 0)
         );
     END COMPONENT;
+    
 
    --Inputs
    signal OP : std_logic_vector(1 downto 0) := "10";
    signal OP3 : std_logic_vector(5 downto 0) := "111100"; -- SAVE
-   signal RS1 : std_logic_vector(4 downto 0) := "11000"; -- In register 24
+   signal RS1 : std_logic_vector(4 downto 0) :=  "11000"; -- In register 24
    signal RS2 : std_logic_vector(4 downto 0) := "11001"; -- In register 25
    signal RD : std_logic_vector(4 downto 0) := "01000"; -- Out register 8
    signal CWP : std_logic := '0'; -- Window 0
-
+	
  	--Outputs
    signal nRS1 : std_logic_vector(5 downto 0);
    signal nRS2 : std_logic_vector(5 downto 0);
    signal nRD : std_logic_vector(5 downto 0);
    signal nCWP : std_logic;
+   signal Register07 : std_logic_vector(5 downto 0);
+ 
+BEGIN
 
-BEGIN 
 	-- Instantiate the Unit Under Test (UUT)
    uut: WindowsManager PORT MAP (
           OP => OP,
@@ -47,8 +52,9 @@ BEGIN
           nRS1 => nRS1,
           nRS2 => nRS2,
           nRD => nRD,
-          nCWP => nCWP
-        );
+          nCWP => nCWP,
+          Register07 => Register07
+        ); 
 
    -- Stimulus process
    stim_proc: process
