@@ -1,4 +1,1 @@
-Processor V3 is still without ending
-
-Pending module changing
-" Arithmetic logic unit 'ALU' "
+Processor V3 is finished and working properly
