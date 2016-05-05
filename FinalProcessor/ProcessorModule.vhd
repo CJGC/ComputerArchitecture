@@ -122,13 +122,14 @@ architecture Behavioral of ProcessorModule is
 		nRS1 : OUT std_logic_vector(5 downto 0);
 		nRS2 : OUT std_logic_vector(5 downto 0);
 		nRD : OUT std_logic_vector(5 downto 0);
-		nCWP : OUT std_logic
+		nCWP : OUT std_logic;
+		Register07 : out std_logic_vector (5 downto 0)
 		);
 	END COMPONENT;
 
 	signal instructionMemoryOut, crs1, crs2, aluResults, IMM13Extended, Operand2 : STD_LOGIC_VECTOR (31 downto 0) :=(others=>'0');
 	signal aluOP : STD_LOGIC_VECTOR(5 downto 0) :=(others=>'0');
-	signal nPCout_PCin, adderOut, address, nrs1, nrs2, nrd : STD_LOGIC_VECTOR(5 downto 0) :=(others => '0');
+	signal nPCout_PCin, adderOut, address, nrs1, nrs2, nrd, register07 : STD_LOGIC_VECTOR(5 downto 0) :=(others => '0');
 	signal nzvc : STD_LOGIC_VECTOR(3 downto 0) :=(others=>'0');
 	signal carry,cwp,ncwp : STD_LOGIC := '0';
 	
@@ -169,8 +170,9 @@ begin
 		nRS1 => nrs1,
 		nRS2 => nrs2,
 		nRD => nrd,
-		nCWP => ncwp
-	);	
+		nCWP => ncwp,
+		Register07 => register07
+	);
 	
 	Inst_SignExtensionUnit: SignExtensionUnit PORT MAP( -- Sign extension unit
 		IMM13 => instructionMemoryOut(12 downto 0),
