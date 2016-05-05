@@ -13,7 +13,8 @@ entity WindowsManager is
            nRS1 : out  STD_LOGIC_VECTOR (5 downto 0);
            nRS2 : out  STD_LOGIC_VECTOR (5 downto 0);
            nRD : out  STD_LOGIC_VECTOR (5 downto 0);
-           nCWP : out  STD_LOGIC);
+           nCWP : out  STD_LOGIC;
+			  Register07 : out std_logic_vector (5 downto 0));
 end WindowsManager;
 
 architecture Behavioral of WindowsManager is
@@ -35,19 +36,23 @@ architecture Behavioral of WindowsManager is
 		return registerNew;
 	end function;
 
+signal aux07 : std_logic_vector(6 downto 0);
+
 begin
 
 	process(OP,OP3,RS1,RS2,RD,CWP)
 	begin --							  SAVE
 		if(OP = "10" and (OP3 = "111100"))then
-			nCWP <= '0';
+			nCWP <= '0'; -- new current windows pointer
 		else --							 RESTORE
 			if(OP = "10" and (OP3 = "111101"))then
-				nCWP <= '1';
+				nCWP <= '1'; -- new current windows pointer
 			end if;
 		end if;
-		nRS1 <= setR(RS1,CWP);
-		nRS2 <= setR(RS2,CWP);
-		nRD <= setR(RD,CWP);
+		nRS1 <= setR(RS1,CWP); -- new register source 1
+		nRS2 <= setR(RS2,CWP); -- new register source 2
+		nRD <= setR(RD,CWP); -- new register destiny
+		aux07 <= conv_std_logic_vector(conv_integer(CWP)*16,7); -- 07 out
+		Register07 <= conv_std_logic_vector(conv_integer(aux07) + 15,6); -- 07 out
 	end process;
 end Behavioral;
