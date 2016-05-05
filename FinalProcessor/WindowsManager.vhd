@@ -36,11 +36,10 @@ architecture Behavioral of WindowsManager is
 		return registerNew;
 	end function;
 
-signal aux07 : std_logic_vector(6 downto 0);
+signal aux07 : std_logic_vector(6 downto 0) := (others => '0');
 
 begin
-
-	process(OP,OP3,RS1,RS2,RD,CWP)
+	process(OP,OP3,RS1,RS2,RD,CWP,aux07)
 	begin --							  SAVE
 		if(OP = "10" and (OP3 = "111100"))then
 			nCWP <= '0'; -- new current windows pointer
