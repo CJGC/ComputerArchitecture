@@ -4,6 +4,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity CU is
     Port ( OP : in  STD_LOGIC_VECTOR (1 downto 0);
            OP3 : in  STD_LOGIC_VECTOR (5 downto 0);
+			  WriteEnable : out STD_LOGIC;
            ALUOP : out  STD_LOGIC_VECTOR (5 downto 0));
 end CU;
 
@@ -39,18 +40,16 @@ begin
 				when "111101" => ALUOP <= OP3; -- RESTORE
 				when others => ALUOP <= "111111"; -- ERROR CASE
 			end case;
---		else
---			if(OP = "00")then
---				ALUOP <= "111111"; --ERROR CASE
---			else
---				if(OP = "01")then
---					ALUOP <= "111111"; --ERROR CASE
---				else
---					if(OP = "11")then
---						ALUOP <= "111111"; --ERROR CASE
---					end if;
---				end if;
---			end if;
+		else
+			if(OP = "11")then
+				if(OP3 = "000100")then -- STORE
+					WriteEnable <= '1';
+				else
+					if(OP3 = "000000")then -- LOAD
+						WriteEnable <= '0';
+					end if;
+				end if;
+			end if;
 		end if;
 	end process;
 	
