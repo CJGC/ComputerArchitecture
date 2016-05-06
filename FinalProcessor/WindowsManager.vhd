@@ -20,20 +20,20 @@ end WindowsManager;
 architecture Behavioral of WindowsManager is
 
 	impure function setR(Rn : STD_LOGIC_VECTOR; CWP : STD_LOGIC) return STD_LOGIC_VECTOR is
-	variable registerNew : std_logic_vector (5 downto 0);
+	variable newRegister : std_logic_vector (5 downto 0);
 	begin--  		In registers 24 - 31
 		if(Rn >= "11000" and Rn <= "11111")then
-			registerNew := conv_std_logic_vector(conv_integer(Rn) - (conv_integer(CWP) * 16),6);
+			newRegister := conv_std_logic_vector(conv_integer(Rn) - (conv_integer(CWP) * 16),6);
 		else-- 				Local register 16 - 23 and Out registers 8 - 15
 			if((Rn >= "10000" and Rn <= "10111") or (Rn >= "01000" and Rn <= "01111"))then
-				registerNew := conv_std_logic_vector(conv_integer(Rn) + (conv_integer(CWP) * 16),6);
+				newRegister := conv_std_logic_vector(conv_integer(Rn) + (conv_integer(CWP) * 16),6);
 			else -- 		Global register 0 - 7
 				if(Rn >= "00000" and Rn <= "00111")then
-					registerNew := conv_std_logic_vector(conv_integer(Rn),6);
+					newRegister := conv_std_logic_vector(conv_integer(Rn),6);
 				end if;
 			end if;
 		end if;
-		return registerNew;
+		return newRegister;
 	end function;
 
 signal aux07 : std_logic_vector(6 downto 0) := (others => '0');
