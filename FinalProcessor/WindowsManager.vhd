@@ -29,17 +29,15 @@ architecture Behavioral of WindowsManager is
 				newRegister := conv_std_logic_vector(conv_integer(Rn) + (conv_integer(CWP) * 16),6);
 			else -- 		Global register 0 - 7
 				if(Rn >= "00000" and Rn <= "00111")then
-					newRegister := '0'&Rn;
-				end if;
+					newRegister := '0'&Rn; -- Concatenate 0 with Rn
+ 				end if;
 			end if;
 		end if;
 		return newRegister;
 	end function;
 
-signal aux07 : std_logic_vector(6 downto 0) := (others => '0');
-
 begin
-	process(OP,OP3,RS1,RS2,RD,CWP,aux07)
+	process(OP,OP3,RS1,RS2,RD,CWP)
 	begin --							  SAVE
 		if(OP = "10" and (OP3 = "111100"))then
 			nCWP <= '0'; -- new current windows pointer
@@ -51,7 +49,6 @@ begin
 		nRS1 <= setR(RS1,CWP); -- new register source 1
 		nRS2 <= setR(RS2,CWP); -- new register source 2
 		nRD <= setR(RD,CWP); -- new register destiny
-		aux07 <= conv_std_logic_vector(conv_integer(CWP)*16,7); -- 07 out
-		Register07 <= conv_std_logic_vector(conv_integer(aux07) + 15,6); -- 07 out
+		Register07 <= conv_std_logic_vector(conv_integer(CWP)*16 + 15,6); -- 07 out
 	end process;
 end Behavioral;
