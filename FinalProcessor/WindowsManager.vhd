@@ -29,7 +29,7 @@ architecture Behavioral of WindowsManager is
 				newRegister := conv_std_logic_vector(conv_integer(Rn) + (conv_integer(CWP) * 16),6);
 			else -- 		Global register 0 - 7
 				if(Rn >= "00000" and Rn <= "00111")then
-					newRegister := conv_std_logic_vector(conv_integer(Rn),6);
+					newRegister := '0'&Rn;
 				end if;
 			end if;
 		end if;
