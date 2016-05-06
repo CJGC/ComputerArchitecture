@@ -13,6 +13,7 @@ ARCHITECTURE behavior OF CU_tb IS
     PORT(
          OP : IN  std_logic_vector(1 downto 0);
          OP3 : IN  std_logic_vector(5 downto 0);
+			WriteEnable : out STD_LOGIC;
          ALUOP : OUT  std_logic_vector(5 downto 0)
         );
     END COMPONENT;
@@ -22,14 +23,16 @@ ARCHITECTURE behavior OF CU_tb IS
    signal OP3 : std_logic_vector(5 downto 0) := (others => '0');
 
  	--Outputs
+	signal WriteEnable : std_logic;
    signal ALUOP : std_logic_vector(5 downto 0);
- 
+
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: CU PORT MAP (
           OP => OP,
           OP3 => OP3,
+			 WriteEnable => WriteEnable,
           ALUOP => ALUOP
         );
 	
@@ -42,6 +45,11 @@ BEGIN
 		OP3 <= ALUOP + '1';
       wait for 100 ns;
 		OP3 <= ALUOP + '1';
+		wait for 100 ns;
+		OP <= "11";
+		OP3 <= "000100"; -- STORE
+		wait for 100 ns;
+		OP3 <= "000000"; -- LOAD
       wait;
    end process;
 
