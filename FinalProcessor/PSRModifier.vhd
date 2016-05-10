@@ -27,25 +27,25 @@ begin
 		-- Logic Instructions
 		-- Andcc, Nandcc, Orcc, Norcc, Xorcc, Xnorcc
 		if((AluOp = "010001") or (AluOP = "010101") or (AluOP = "010010" )or (AluOP = "010110") or (AluOP = "010011") or (AluOP = "010111")) then
-			NZVC(3) <= AluResult(31);
-			NZVC(2) <= ZeroBitSet(AluResult);
-			NZVC(1 downto 0) <= "00";
+			NZVC(3) <= AluResult(31); -- N
+			NZVC(2) <= ZeroBitSet(AluResult); -- Z
+			NZVC(1 downto 0) <= "00"; -- V and C
 		else
 			-- Add Instructions
 			-- Addcc, Addxcc
 			if((AluOp = "010000") or (AluOp = "011000"))then
-				NZVC(3) <= AluResult(31);
-				NZVC(2) <= ZeroBitSet(AluResult);
-				NZVC(1) <= (CRs1(31) and Operand2(31) and (not AluResult(31))) or ((not CRs1(31)) and (not Operand2(31)) and AluResult(31));
-				NZVC(0) <= (CRs1(31) and Operand2(31)) or ((not AluResult(31)) and (CRs1(31) or Operand2(31)));
+				NZVC(3) <= AluResult(31); -- N
+				NZVC(2) <= ZeroBitSet(AluResult); -- Z
+				NZVC(1) <= (CRs1(31) and Operand2(31) and (not AluResult(31))) or ((not CRs1(31)) and (not Operand2(31)) and AluResult(31)); -- V
+				NZVC(0) <= (CRs1(31) and Operand2(31)) or ((not AluResult(31)) and (CRs1(31) or Operand2(31))); -- C
 			else
 				-- Sub Instructions
 				-- Subcc, Subxcc
 				if((AluOp = "010100") or (AluOP = "011100"))then
-					NZVC(3) <= AluResult(31);
-					NZVC(2) <= ZeroBitSet(AluResult);
-					NZVC(1) <= (CRs1(31) and (not Operand2(31)) and (not AluResult(31))) or ((not CRs1(31)) and Operand2(31) and AluResult(31));
-					NZVC(0) <= ((not CRs1(31)) and Operand2(31)) or (AluResult(31) and ((not CRs1(31)) or Operand2(31)));
+					NZVC(3) <= AluResult(31); -- N
+					NZVC(2) <= ZeroBitSet(AluResult); -- Z
+					NZVC(1) <= (CRs1(31) and (not Operand2(31)) and (not AluResult(31))) or ((not CRs1(31)) and Operand2(31) and AluResult(31)); -- V
+					NZVC(0) <= ((not CRs1(31)) and Operand2(31)) or (AluResult(31) and ((not CRs1(31)) or Operand2(31))); -- C
 				end if;
 			end if;
 		end if;
