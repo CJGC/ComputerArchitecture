@@ -31,8 +31,8 @@ begin
 				PSRRegister(0) <= nCWP; -- [cwp]
 				PSRRegister(23 downto 20) <= NZVC; -- [ICC]
 				Carry <= PSRRegister(20); -- C bit
-				CWP <= PSRRegister(0); -- cwp 1 bit
-				ICC <= PSRRegister(23 downto 20); -- [ICC]
+				CWP <= PSRRegister(0); -- CWP bit
+				ICC <= PSRRegister(23 downto 20); -- NZVC
 			end if;
 		end if;
 	end process;
