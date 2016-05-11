@@ -23,32 +23,21 @@ architecture Behavioral of PSRModifier is
 begin
 
 	process(CRs1,Operand2,AluOp,AluResult)
-	begin
-		-- Logic Instructions
-		-- Andcc, Nandcc, Orcc, Norcc, Xorcc, Xnorcc
+	begin					-- Logical Instructions
+							-- Andcc, Nandcc, Orcc, Norcc, Xorcc, Xnorcc
 		if((AluOp = "010001") or (AluOP = "010101") or (AluOP = "010010" )or (AluOP = "010110") or (AluOP = "010011") or (AluOP = "010111")) then
-			NZVC(3) <= AluResult(31); -- N
-			NZVC(2) <= ZeroBitSet(AluResult); -- Z
 			NZVC(1 downto 0) <= "00"; -- V and C
-		else
-			-- Add Instructions
-			-- Addcc, Addxcc
-			if((AluOp = "010000") or (AluOp = "011000"))then
-				NZVC(3) <= AluResult(31); -- N
-				NZVC(2) <= ZeroBitSet(AluResult); -- Z
-				NZVC(1) <= (CRs1(31) and Operand2(31) and (not AluResult(31))) or ((not CRs1(31)) and (not Operand2(31)) and AluResult(31)); -- V
-				NZVC(0) <= (CRs1(31) and Operand2(31)) or ((not AluResult(31)) and (CRs1(31) or Operand2(31))); -- C
-			else
-				-- Sub Instructions
-				-- Subcc, Subxcc
-				if((AluOp = "010100") or (AluOP = "011100"))then
-					NZVC(3) <= AluResult(31); -- N
-					NZVC(2) <= ZeroBitSet(AluResult); -- Z
-					NZVC(1) <= (CRs1(31) and (not Operand2(31)) and (not AluResult(31))) or ((not CRs1(31)) and Operand2(31) and AluResult(31)); -- V
-					NZVC(0) <= ((not CRs1(31)) and Operand2(31)) or (AluResult(31) and ((not CRs1(31)) or Operand2(31))); -- C
-				end if;
-			end if;
+							-- Addcc, Addxcc
+		elsif((AluOp = "010000") or (AluOp = "011000"))then -- Add instruction
+			NZVC(1) <= (CRs1(31) and Operand2(31) and (not AluResult(31))) or ((not CRs1(31)) and (not Operand2(31)) and AluResult(31)); -- V
+			NZVC(0) <= (CRs1(31) and Operand2(31)) or ((not AluResult(31)) and (CRs1(31) or Operand2(31))); -- C
+							-- Subcc, Subxcc
+		elsif((AluOp = "010100") or (AluOP = "011100"))then -- Sub instructions
+			NZVC(1) <= (CRs1(31) and (not Operand2(31)) and (not AluResult(31))) or ((not CRs1(31)) and Operand2(31) and AluResult(31)); -- V
+			NZVC(0) <= ((not CRs1(31)) and Operand2(31)) or (AluResult(31) and ((not CRs1(31)) or Operand2(31))); -- C
 		end if;
+		NZVC(3) <= AluResult(31); -- N
+		NZVC(2) <= ZeroBitSet(AluResult); -- Z
 	end process;
 
 end Behavioral;
