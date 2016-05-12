@@ -9,9 +9,11 @@ entity registerFile is
            registerSource1 : in  STD_LOGIC_VECTOR (5 downto 0);
            registerSource2 : in  STD_LOGIC_VECTOR (5 downto 0);
            registerDestination : in  STD_LOGIC_VECTOR (5 downto 0);
+			  we : in STD_LOGIC;
 			  dataToWrite : in STD_LOGIC_VECTOR (31 downto 0);
            contentRegisterSource1 : out  STD_LOGIC_VECTOR (31 downto 0);
-           contentRegisterSource2 : out  STD_LOGIC_VECTOR (31 downto 0));
+           contentRegisterSource2 : out  STD_LOGIC_VECTOR (31 downto 0);
+			  contentRegisterDestination : out STD_LOGIC_VECTOR (31 downto 0));
 end registerFile;
 
 architecture arqRegisterFile of registerFile is
@@ -35,16 +37,18 @@ architecture arqRegisterFile of registerFile is
 	signal registers : ram_type := initRamFromFile("DataRam.txt");
 	
 begin
-	process(reset,registerDestination,registerSource1,registerSource2,dataToWrite,registers)
+	process(reset,registerDestination,registerSource1,registerSource2,dataToWrite,registers,we)
 	begin
 		if(reset = '1')then
 			contentRegisterSource1 <= (others=>'0');
 			contentRegisterSource2 <= (others=>'0');
+			contentRegisterDestination <= (others=>'0');
 			registers <= initRamFromFile("DataRam.txt");
 		else		
 			contentRegisterSource1 <= registers(conv_integer(registerSource1));
 			contentRegisterSource2 <= registers(conv_integer(registerSource2));
-			if(registerDestination /= "0000") then registers(conv_integer(registerDestination)) <= dataToWrite;
+			contentRegisterDestination <= registers(conv_integer(registerDestination));
+			if(registerDestination /= "0000" and we = '1') then registers(conv_integer(registerDestination)) <= dataToWrite;
 			end if;
 		end if;
 	end process;
