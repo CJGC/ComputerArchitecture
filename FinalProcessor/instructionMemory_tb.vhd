@@ -11,14 +11,14 @@ ARCHITECTURE behavior OF instructionMemory_tb IS
  
     COMPONENT instructionMemory
     PORT(
-         address : IN  std_logic_vector(5 downto 0);
+         address : IN  std_logic_vector(31 downto 0);
          reset : IN  std_logic;
          outInstruction : OUT  std_logic_vector(31 downto 0)
         );
     END COMPONENT;
     
    --Inputs
-   signal address : std_logic_vector(5 downto 0) := (others => '0');
+   signal address : std_logic_vector(31 downto 0) := (others => '0');
    signal reset : std_logic := '0';
 
  	--Outputs
