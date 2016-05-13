@@ -13,18 +13,18 @@ ARCHITECTURE behavior OF PC_tb IS
     PORT(
          CLK : IN  std_logic;
          rst : IN  std_logic;
-         PCin : IN  std_logic_vector(5 downto 0);
-         address : OUT  std_logic_vector(5 downto 0)
+         PCin : IN  std_logic_vector(31 downto 0);
+         address : OUT  std_logic_vector(31 downto 0)
         );
     END COMPONENT;
     
    --Inputs
    signal CLK : std_logic := '0';
    signal rst : std_logic := '0';
-   signal PCin : std_logic_vector(5 downto 0) := (others => '0');
+   signal PCin : std_logic_vector(31 downto 0) := (others => '0');
 
  	--Outputs
-   signal address : std_logic_vector(5 downto 0);
+   signal address : std_logic_vector(31 downto 0);
 
    -- Clock period definitions
    constant CLK_period : time := 10 ns;
