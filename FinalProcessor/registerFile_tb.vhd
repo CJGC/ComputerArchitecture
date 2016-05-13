@@ -12,25 +12,29 @@ ARCHITECTURE behavior OF registerFile_tb IS
     COMPONENT registerFile
     PORT(
          reset : IN  std_logic;
-         registerSource1 : IN  std_logic_vector(4 downto 0);
-         registerSource2 : IN  std_logic_vector(4 downto 0);
-         registerDestination : IN  std_logic_vector(4 downto 0);
+         registerSource1 : IN  std_logic_vector(5 downto 0);
+         registerSource2 : IN  std_logic_vector(5 downto 0);
+         registerDestination : IN  std_logic_vector(5 downto 0);
+			we : in std_logic;
          dataToWrite : IN  std_logic_vector(31 downto 0);
          contentRegisterSource1 : OUT  std_logic_vector(31 downto 0);
-         contentRegisterSource2 : OUT  std_logic_vector(31 downto 0)
+         contentRegisterSource2 : OUT  std_logic_vector(31 downto 0);
+			contentRegisterDestination : OUT std_logic_vector (31 downto 0)
         );
     END COMPONENT;
 
    --Inputs
    signal reset : std_logic := '0';
-   signal registerSource1 : std_logic_vector(4 downto 0) := (others => '0');
-   signal registerSource2 : std_logic_vector(4 downto 0) := "00001";
-   signal registerDestination : std_logic_vector(4 downto 0) := (others => '0');
-   signal dataToWrite : std_logic_vector(31 downto 0) := (others => '0');
+   signal registerSource1 : std_logic_vector(5 downto 0) := (others => '0');
+   signal registerSource2 : std_logic_vector(5 downto 0) := "000001";
+   signal registerDestination : std_logic_vector(5 downto 0) := (others => '0');
+   signal we : std_logic := '1';
+	signal dataToWrite : std_logic_vector(31 downto 0) := (others => '0');
 
  	--Outputs
    signal contentRegisterSource1 : std_logic_vector(31 downto 0);
    signal contentRegisterSource2 : std_logic_vector(31 downto 0);
+	signal contentRegisterDestination : std_logic_vector(31 downto 0);
 
 BEGIN
  
@@ -40,9 +44,11 @@ BEGIN
           registerSource1 => registerSource1,
           registerSource2 => registerSource2,
           registerDestination => registerDestination,
+			 we => we,
           dataToWrite => dataToWrite,
           contentRegisterSource1 => contentRegisterSource1,
-          contentRegisterSource2 => contentRegisterSource2
+          contentRegisterSource2 => contentRegisterSource2,
+			 contentRegisterDestination => contentRegisterDestination
         );
 
    -- Stimulus process
@@ -60,6 +66,7 @@ BEGIN
 		registerSource1 <= (others => '0');
 		registerSource2 <= (others => '0');
 		wait for 100 ns;
+		we <= '0';
 		registerDestination <= registerDestination + '1';
 		registerSource1 <= registerSource1 + '1';
 		wait for 100 ns;
