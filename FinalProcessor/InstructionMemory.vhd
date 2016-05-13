@@ -5,7 +5,7 @@ use std.textio.all;
 
 entity instructionMemory is
     Port ( 
-			  address : in  STD_LOGIC_VECTOR (5 downto 0);
+			  address : in  STD_LOGIC_VECTOR (31 downto 0);
            reset : in  STD_LOGIC;
            outInstruction : out  STD_LOGIC_VECTOR (31 downto 0));
 end instructionMemory;
