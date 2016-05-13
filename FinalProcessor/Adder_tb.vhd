@@ -10,18 +10,18 @@ ARCHITECTURE behavior OF Adder_tb IS
  
     COMPONENT Adder
     PORT(
-         AdderInput1 : IN  std_logic;
-         nPCout_PCin : IN  std_logic_vector(5 downto 0);
-         AdderOut : OUT  std_logic_vector(5 downto 0)
+         AdderInput1 : IN  std_logic_vector(31 downto 0);
+         nPCout_PCin : IN  std_logic_vector(31 downto 0);
+         AdderOut : OUT  std_logic_vector(31 downto 0)
         );
     END COMPONENT;
     
    --Inputs
-   signal AdderInput1 : std_logic := '1';
-   signal nPCout_PCin : std_logic_vector(5 downto 0) := (others => '0');
+   signal AdderInput1 : std_logic_vector(31 downto 0) := (others => '1');
+   signal nPCout_PCin : std_logic_vector(31 downto 0) := (others => '0');
 
  	--Outputs
-   signal AdderOut : std_logic_vector(5 downto 0);
+   signal AdderOut : std_logic_vector(31 downto 0);
  
 BEGIN
  
