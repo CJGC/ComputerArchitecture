@@ -12,19 +12,19 @@ ARCHITECTURE behavior OF nPC_tb IS
     COMPONENT nPC
     PORT(
          CLK : IN  std_logic;
-         nPCin : IN  std_logic_vector(5 downto 0);
-         nPCout_PCin : OUT  std_logic_vector(5 downto 0);
+         nPCin : IN  std_logic_vector(31 downto 0);
+         nPCout_PCin : OUT  std_logic_vector(31 downto 0);
          rst : IN  std_logic
         );
     END COMPONENT;
 
    --Inputs
    signal CLK : std_logic := '0';
-   signal nPCin : std_logic_vector(5 downto 0) := (others => '0');
+   signal nPCin : std_logic_vector(31 downto 0) := (others => '0');
    signal rst : std_logic := '0';
 
  	--Outputs
-   signal nPCout_PCin : std_logic_vector(5 downto 0);
+   signal nPCout_PCin : std_logic_vector(31 downto 0);
 
    -- Clock period definitions
    constant CLK_period : time := 10 ns;
