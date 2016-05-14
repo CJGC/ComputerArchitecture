@@ -10,15 +10,15 @@ ARCHITECTURE behavior OF Adder_tb IS
  
     COMPONENT Adder
     PORT(
-         AdderInput1 : IN  std_logic_vector(31 downto 0);
-         nPCout_PCin : IN  std_logic_vector(31 downto 0);
+         Input1 : IN  std_logic_vector(31 downto 0);
+         Input2 : IN  std_logic_vector(31 downto 0);
          AdderOut : OUT  std_logic_vector(31 downto 0)
         );
     END COMPONENT;
     
    --Inputs
-   signal AdderInput1 : std_logic_vector(31 downto 0) := (others => '1');
-   signal nPCout_PCin : std_logic_vector(31 downto 0) := (others => '0');
+   signal Input1 : std_logic_vector(31 downto 0) := (others => '1');
+   signal Input2 : std_logic_vector(31 downto 0) := (others => '0');
 
  	--Outputs
    signal AdderOut : std_logic_vector(31 downto 0);
@@ -27,8 +27,8 @@ BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: Adder PORT MAP (
-          AdderInput1 => AdderInput1,
-          nPCout_PCin => nPCout_PCin,
+          Input1 => Input1,
+          Input2 => Input2,
           AdderOut => AdderOut
         );
 
@@ -36,11 +36,11 @@ BEGIN
    stim_proc: process
    begin
       wait for 100 ns;
-		nPCout_PCin <= AdderOut;
+		Input2 <= AdderOut;
 		wait for 100 ns;
-		nPCout_PCin <= AdderOut;
+		Input2 <= AdderOut;
 		wait for 100 ns;
-		nPCout_PCin <= AdderOut;
+		Input2 <= AdderOut;
       wait;
    end process;
 
