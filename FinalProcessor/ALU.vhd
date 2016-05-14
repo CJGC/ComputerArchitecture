@@ -39,6 +39,7 @@ begin
 			when "011100" => ALUResult <= CRs1 - Operand2 - Carry; -- subxcc
 			when "111100" => ALUResult <= CRs1 + Operand2; -- SAVE
 			when "111101" => ALUResult <= CRs1 + Operand2; -- RESTORE
+			when "111000" => ALUResult <= CRs1 + Operand2; -- JMPL
 			when others => ALUResult <= (others => '1'); -- ERROR CASE
 		end case;
 	end process;
