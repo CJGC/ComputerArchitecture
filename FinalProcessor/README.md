@@ -1,3 +1,3 @@
 Final Processor is still on development	
 
-Module CU branching, must be completed!
+Test bench belonging to module CU, must be modified
