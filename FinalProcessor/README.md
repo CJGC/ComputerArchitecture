@@ -1,3 +1,3 @@
 Final Processor is still on development	
 
-The processor must be assembled and proved
+The processor must be proved
