@@ -26,16 +26,16 @@ begin
 				BranchAux <= '0'; -- 0 indicates that don't not fulfilled the ICC code or is branch never case
 				if(COND = "1000")then BranchAux <= '1'; -- Branch always ; BranchAux = 1 indicates that fulfilled the ICC code
 				elsif(COND = "0000")then BranchAux <= '0'; -- Branch never
-				elsif((COND = "1001") and (not(ICC(2)) = '1'))then BranchAux <= '1'; -- Branch on not equal ; Not z
-				elsif((COND = "0001") and (ICC(2) = '1'))then BranchAux <= '1'; -- Branch on equal ; Z
-				elsif((COND = "1010") and ((not(ICC(2) or (ICC(3) xor ICC(1)))) = '1'))then BranchAux <= '1'; -- Branch on greater ; not(Z or (N xor V))
-				elsif((COND = "0010") and ((ICC(2) or (ICC(3) xor ICC(1))) = '1'))then BranchAux <= '1'; -- Branch on less or equal ; Z or (N xor V)
-				elsif((COND = "1011") and ((not(ICC(3) xor ICC(1))) = '1'))then BranchAux <= '1'; -- Branch on greater or equal ; not(N xor V)
-				elsif((COND = "0011") and ((ICC(3) xor ICC(1)) = '1'))then BranchAux <= '1'; -- Branch on less ; N xor V
+				elsif((COND = "1001")and(not(ICC(2)) = '1'))then BranchAux <= '1'; -- Branch on not equal ; Not z
+				elsif((COND = "0001")and(ICC(2) = '1'))then BranchAux <= '1'; -- Branch on equal ; Z
+				elsif((COND = "1010")and((not(ICC(2) or (ICC(3) xor ICC(1)))) = '1'))then BranchAux <= '1'; -- Branch on greater ; not(Z or (N xor V))
+				elsif((COND = "0010")and((ICC(2) or (ICC(3) xor ICC(1))) = '1'))then BranchAux <= '1'; -- Branch on less or equal ; Z or (N xor V)
+				elsif((COND = "1011")and((not(ICC(3) xor ICC(1))) = '1'))then BranchAux <= '1'; -- Branch on greater or equal ; not(N xor V)
+				elsif((COND = "0011")and((ICC(3) xor ICC(1)) = '1'))then BranchAux <= '1'; -- Branch on less ; N xor V
 				elsif((COND = "1100")and((not(ICC(0) or ICC(2))) = '1'))then BranchAux <= '1'; -- Branch on greater unsigned ; not(C or Z)
-				elsif((COND = "0100")and((ICC(0) or ICC(2)) = '1'))then BranchAux <= '1'; -- Branch on less or equal unsigned ; C or >
-				elsif((COND = "1101") and(not(ICC(0)) = '1'))then BranchAux <= '1'; -- Branch on carry clear ; Not C
-				elsif((COND = "0101") and(ICC(0) = '1'))then BranchAux <= '1'; -- Branch on carry set ; C
+				elsif((COND = "0100")and((ICC(0) or ICC(2)) = '1'))then BranchAux <= '1'; -- Branch on less or equal unsigned ; C or Z
+				elsif((COND = "1101")and(not(ICC(0)) = '1'))then BranchAux <= '1'; -- Branch on carry clear ; Not C
+				elsif((COND = "0101")and(ICC(0) = '1'))then BranchAux <= '1'; -- Branch on carry set ; C
 				elsif((COND = "1110")and(not(ICC(3)) = '1'))then BranchAux <= '1'; -- Branch on positive
 				elsif((COND = "0110")and(ICC(3) = '1'))then BranchAux <= '1'; -- Branch on negative ; N
 				elsif((COND = "1111")and(not(ICC(1)) = '1'))then BranchAux <= '1'; -- Branch on overflow clear ; Not V
