@@ -24,10 +24,9 @@ begin
 
 	process(Selector,IMM13,Disp22,Disp30)
 	begin
-		if(Selector = "10")then SignExtensionOut <= SignExtend(IMM13,"1111111111111111111","0000000000000000000",12); -- Extent IMM13 ; Arithmetic
+		if(Selector = "10" or Selector = "11")then SignExtensionOut <= SignExtend(IMM13,"1111111111111111111","0000000000000000000",12); -- Extent IMM13 ; Arithmetic or LOAD or STORE
 		elsif(Selector = "00")then SignExtensionOut <= SignExtend(Disp22,"1111111111","0000000000",21); -- Extent Disp22 ; Branch
 		elsif(Selector = "01")then SignExtensionOut <= SignExtend(Disp30,"11","00",29); -- Extent Disp30 ; CALL
-		elsif(Selector = "11")then SignExtensionOut <= (others => '0'); -- LOAD or STORE case, don't matter
 		end if;
 	end process;
 
