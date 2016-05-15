@@ -1,3 +1,3 @@
 Final Processor is still on development	
 
-Test bench belonging to module CU, must be modified
+The processor must be assembled and proved
