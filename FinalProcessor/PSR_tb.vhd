@@ -13,7 +13,6 @@ ARCHITECTURE behavior OF PSR_tb IS
          CLK : IN  std_logic;
          Reset : IN  std_logic;
 			nCWP : IN STD_LOGIC;
-         Operand2 : IN  std_logic_vector(31 downto 0);
          NZVC : IN  std_logic_vector(3 downto 0);
          Carry : OUT  std_logic;
 			ICC : OUT STD_LOGIC_VECTOR (3 downto 0);
@@ -22,10 +21,9 @@ ARCHITECTURE behavior OF PSR_tb IS
     END COMPONENT;
 
    --Inputs
-   signal CLK : std_logic := '1';
+   signal CLK : std_logic := '0';
    signal Reset : std_logic := '0';
 	signal nCWP : std_logic := '0'; -- Window 0
-   signal Operand2 : std_logic_vector(31 downto 0) := (others => '0');
    signal NZVC : std_logic_vector(3 downto 0) := (others => '0');
 
  	--Outputs
@@ -43,7 +41,6 @@ BEGIN
           CLK => CLK,
           Reset => Reset,
 			 nCWP => nCWP,
-          Operand2 => Operand2,
           NZVC => NZVC,
           Carry => Carry,
 			 ICC => ICC,
