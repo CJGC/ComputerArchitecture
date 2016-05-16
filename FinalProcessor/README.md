@@ -1,3 +1,1 @@
-Final Processor is still on development	
-
-The processor must be proved
+Final Processor project has finished and working properly
