@@ -12,7 +12,7 @@ ARCHITECTURE behavior OF ProcessorModule_tb IS
     PORT(
          CLK : IN  std_logic;
          rst : IN  std_logic;
-         aluResult : OUT  std_logic_vector(31 downto 0)
+         outProcessor : OUT  std_logic_vector(31 downto 0)
         );
     END COMPONENT;
 
@@ -21,7 +21,7 @@ ARCHITECTURE behavior OF ProcessorModule_tb IS
    signal rst : std_logic := '0';
 
  	--Outputs
-   signal aluResult : std_logic_vector(31 downto 0);
+   signal outProcessor : std_logic_vector(31 downto 0);
 
    -- Clock period definitions
    constant CLK_period : time := 20 ns;
@@ -32,7 +32,7 @@ BEGIN
    uut: ProcessorModule PORT MAP (
           CLK => CLK,
           rst => rst,
-          aluResult => aluResult
+          outProcessor => outProcessor
         );
 
    -- Clock process definitions
