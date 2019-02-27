@@ -1,1 +1,1 @@
-This repository will contain entire code, belonging to unicycle processor Sparc v8
+This repository will contain the code about the unicycle processor Sparc v8
